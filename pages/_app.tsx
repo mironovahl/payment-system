@@ -12,16 +12,15 @@ const GlobalStyle = createGlobalStyle`
     background-size: cover;
     height: 100vh;
     font-family: 'Montserrat Alternates', sans-serif;
+    margin: 0;
   }
 `;
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <>
-      <GlobalStyle />
-      <Component {...pageProps} />
-    </>
-  );
-}
+const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => (
+  <>
+    <GlobalStyle />
+    <Component {...pageProps} />
+  </>
+);
 
 export default MyApp;

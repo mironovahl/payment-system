@@ -30,6 +30,7 @@ module.exports = {
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
     'no-use-before-define': 'off',
+    'react/jsx-props-no-spreading': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
     'import/extensions': [
       'error',
