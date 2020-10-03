@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import MaskedInput from 'react-text-mask';
@@ -22,9 +22,38 @@ const PaymentCard = styled.div`
   padding: 50px 100px;
   border: 2px solid #000000;
   box-shadow: 15px 15px 1px #ffa580, 15px 15px 1px 2px  #000000;
+  a {
+    color: black;
+    margin-top: 24px;
+    &:hover {
+      color: #8672d6;  
+    }
+  }
+
 `;
 
-const Input = styled(MaskedInput)`
+const Input = styled.input`
+  display: block;
+  font-family: 'Montserrat Alternates', sans-serif;
+  width: 100%;
+  border: none;
+  font-size: 24px;
+  padding: 5px;
+  border-bottom: 5px solid #000000;
+  min-width: 250px;
+  outline: none;
+  background: #f8f4e5;
+  margin: 0 0 24px;
+  color:  #000000;
+  &:focus {
+    border-bottom: 5px solid #ffa580;
+  }
+  &::selection {
+    background: #ffc8ff;
+  }
+`;
+
+const NumberInput = styled(MaskedInput)`
   display: block;
   font-family: 'Montserrat Alternates', sans-serif;
   width: 100%;
@@ -71,34 +100,48 @@ const Button = styled.button`
   
 `;
 
-const Operator = ({ operatorData }: IProps) => (
-  <PaymentCard>
-    <Title>{operatorData.name}</Title>
-    <form action="">
-      <Label htmlFor="phoneNumber"> Номер телефона </Label>
-      <Input
-        type="tel"
-        id="phoneNumber"
-        name="phoneNumber"
-        required
-        placeholder="Phone number"
-        mask={['+', '7', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-      />
-      <Label htmlFor="amount"> Сумма </Label>
-      <Input
-        type="tel"
-        id="amount"
-        required
-        name="amount"
-        placeholder="Amount"
-        mask={['₽', /\d/, /\d/, /\d/, /\d/]}
-      />
-      <Button type="submit">Оплатить</Button>
+const Operator = ({ operatorData }: IProps) => {
+  const [numberPhone, SetNumberPhone] = useState();
+  const [amount, SetAmount] = useState();
+  return (
+    <PaymentCard>
+      <Title>{operatorData.name}</Title>
+      <form action="">
+        <Label htmlFor="phoneNumber"> Номер телефона </Label>
+        <NumberInput
+          type="tel"
+          id="phoneNumber"
+          name="phoneNumber"
+          required
+          placeholder="+7(___) ___-____"
+          value={numberPhone}
+          onChange={({ value }) => SetNumberPhone(value)}
+          mask={['+', '7', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+        />
+        <Label htmlFor="amount"> Сумма в рублях </Label>
+        <Input
+          type="number"
+          min={1}
+          max={1000}
+          id="amount"
+          required
+          name="amount"
+          placeholder="1 - 1000 руб."
+          value={amount}
+          onChange={({ value }) => SetAmount(value)}
+        />
+        <Button
+          type="submit"
+        >
+          Оплатить
 
-    </form>
-    <Link href="/"><a>Выбрать другого оператора</a></Link>
-  </PaymentCard>
-);
+        </Button>
+
+      </form>
+      <Link href="/"><a>Выбрать другого оператора</a></Link>
+    </PaymentCard>
+  );
+};
 
 export async function getStaticPaths() {
   const paths = Object.entries(operatorsData).map(
