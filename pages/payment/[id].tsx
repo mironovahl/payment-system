@@ -14,7 +14,7 @@ interface IOperatorProps {
 
 const Operator: React.FC<IOperatorProps> = ({ operatorData }: IOperatorProps) => {
   const [numberPhone, SetNumberPhone] = useState<string>();
-  const [amount, SetAmount] = useState<string>();
+  const [amount, SetAmount] = useState<string>('');
   const [isError, SetIsError] = useState<boolean>(false);
   const router = useRouter();
 
@@ -51,6 +51,7 @@ const Operator: React.FC<IOperatorProps> = ({ operatorData }: IOperatorProps) =>
             placeholder="+7(___) ___-____"
             value={numberPhone}
             onChange={({ value }) => SetNumberPhone(value)}
+            pattern="\+7[\(][0-9]{3}[\)]\s?\d{3}[-]{0,1}\d{4}"
             mask={['+', '7', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
           />
           <label htmlFor="amount"> Сумма в рублях </label>
