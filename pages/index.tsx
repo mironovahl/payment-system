@@ -5,9 +5,11 @@ import {
   Title, Buttons, Button, ChoiseOperator,
 } from '../styles/choiseOperators-style';
 
-const generateOperators = () => Object.entries(operatorsData).map(([key]) => (
-  <Link key={key} href={`/payment/${key}`}>
-    <Button><a>{operatorsData[key].name}</a></Button>
+const generateOperators = () => Object.keys(operatorsData).map((key) => (
+  <Link key={key} href="/payment/[id]" as={`/payment/${key}`}>
+    <a>
+      <Button>{operatorsData[key].name}</Button>
+    </a>
   </Link>
 ));
 

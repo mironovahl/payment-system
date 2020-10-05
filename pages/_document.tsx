@@ -20,7 +20,6 @@ export default class MyDocument extends Document<IDocumentProps> {
     return (
       <Html>
         <Head>
-          <title>Оплата</title>
           <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;400;700&display=swap" rel="stylesheet" />
           <link rel="shortcut icon" href="/favicon.png" type="image/png" />
           {this.props.styleTags}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -18,6 +19,9 @@ const GlobalStyle = createGlobalStyle`
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => (
   <>
+    <Head>
+      <title>Оплата</title>
+    </Head>
     <GlobalStyle />
     <Component {...pageProps} />
   </>
