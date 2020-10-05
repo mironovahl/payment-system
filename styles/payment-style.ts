@@ -94,8 +94,6 @@ const Button = styled.button`
   background-position: 0;
   transition: 500ms ease-in-out;
 }
-
-
 `;
 
 export {

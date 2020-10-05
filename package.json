@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/react-text-mask": "^5.4.6",
     "@types/styled-components": "^5.1.3",
     "next": "9.5.3",
     "react": "16.13.1",

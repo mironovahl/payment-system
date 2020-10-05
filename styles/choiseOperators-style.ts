@@ -8,11 +8,17 @@ const ChoiseOperator = styled.div`
 const Buttons = styled.div`
   display: flex;
   flex-direction: column;
+  a {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+  }
 `;
 
 const Button = styled.button`
   margin: 5px 0;
   cursor: pointer;
+  width: 100%;
   border: 2px solid  #ffa580;
   border-radius: 8px;
   padding: 10px;
@@ -22,6 +28,7 @@ const Button = styled.button`
   outline: none;
   font-family: 'Montserrat Alternates', sans-serif;
   font-weight: 400;
+  text-decoration: none;
   &:hover{
     background: #ffa580;
     color: white;

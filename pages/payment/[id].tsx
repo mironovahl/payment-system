@@ -7,15 +7,21 @@ import {
 import operatorsData from '../../data/operators';
 import { IOperatorData } from '../../interfaces/operators-interfaces';
 import ModalWindowStyled from '../../components/modalWindow';
+import useModal from '../../components/useModal';
 
 interface IOperatorProps {
   operatorData: IOperatorData;
 }
 
+interface IModalData {
+  title: string;
+  text: string;
+}
 const Operator: React.FC<IOperatorProps> = ({ operatorData }: IOperatorProps) => {
-  const [numberPhone, SetNumberPhone] = useState<string>();
-  const [amount, SetAmount] = useState<string>('');
-  const [isError, SetIsError] = useState<boolean>(false);
+  const [numberPhone, setNumberPhone] = useState<string>();
+  const [amount, setAmount] = useState<string>('');
+  const { isShowing, toggle } = useModal();
+  const [modalData, setModalData] = useState<IModalData>();
   const router = useRouter();
 
   const HandleFormSubmit = async (event) => {
@@ -32,9 +38,19 @@ const Operator: React.FC<IOperatorProps> = ({ operatorData }: IOperatorProps) =>
     });
 
     if (!res.ok) {
-      SetIsError(true);
+      setModalData({
+        title: 'Ошибка',
+        text: 'Ошибка при оплате',
+      });
+      toggle();
     } else {
-      router.push('/');
+      setModalData({
+        title: 'Завершено',
+        text: 'Оплата прошла успешно',
+      });
+
+      toggle();
+      setTimeout(() => router.push('/'), 1500);
     }
   };
   return (
@@ -50,7 +66,7 @@ const Operator: React.FC<IOperatorProps> = ({ operatorData }: IOperatorProps) =>
             required
             placeholder="+7(___) ___-____"
             value={numberPhone}
-            onChange={({ value }) => SetNumberPhone(value)}
+            onChange={({ target }) => setNumberPhone(target.value)}
             pattern="\+7[\(][0-9]{3}[\)]\s?\d{3}[-]{0,1}\d{4}"
             mask={['+', '7', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
           />
@@ -65,7 +81,7 @@ const Operator: React.FC<IOperatorProps> = ({ operatorData }: IOperatorProps) =>
             name="amount"
             placeholder="1 - 1000 руб."
             value={amount}
-            onChange={({ target }) => SetAmount(target.value)}
+            onChange={({ target }) => setAmount(target.value)}
           />
           <Button
             type="submit"
@@ -75,7 +91,11 @@ const Operator: React.FC<IOperatorProps> = ({ operatorData }: IOperatorProps) =>
         </form>
         <Link href="/"><a>Выбрать другого оператора</a></Link>
       </PaymentCard>
-      <ModalWindowStyled text="Ошибка при оплате" isVisible={isError} changeIsVisible={SetIsError} />
+      <ModalWindowStyled
+        isShowing={isShowing}
+        hide={toggle}
+        modalData={modalData}
+      />
     </>
   );
 };
