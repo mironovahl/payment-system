@@ -8,15 +8,12 @@ import operatorsData from '../../data/operators';
 import { IOperatorData } from '../../interfaces/operators-interfaces';
 import ModalWindowStyled from '../../components/modalWindow';
 import useModal from '../../components/useModal';
+import { IModalData } from '../../interfaces/modal-interfaces';
 
 interface IOperatorProps {
   operatorData: IOperatorData;
 }
 
-interface IModalData {
-  title: string;
-  text: string;
-}
 const Operator: React.FC<IOperatorProps> = ({ operatorData }: IOperatorProps) => {
   const [numberPhone, setNumberPhone] = useState<string>();
   const [amount, setAmount] = useState<string>('');
